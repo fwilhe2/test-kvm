@@ -9,6 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: fwilhe2/act-runner-image-inspect@main
+    - run: ls -l /opt/hostedtoolcache/
     - name: test
       run: |
           docker pull node
