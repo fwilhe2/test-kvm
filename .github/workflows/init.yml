@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Enable KVM group perms
+    - uses: fwilhe2/act-runner-image-inspect@main
+    - name: test
       run: |
           docker pull node
-          BYTES=$(docker inspect -f "{{ .Size }}"  node:latest)
-          numfmt --to iec --format "%8.4f" $BYTES
+          docker inspect -f "{{ .Size }}"  node:latest | numfmt --to iec --format "%8.4f"
