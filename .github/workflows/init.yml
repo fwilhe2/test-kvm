@@ -10,7 +10,15 @@ jobs:
     - uses: actions/checkout@v3
     - uses: fwilhe2/act-runner-image-inspect@main
     - run: ls -l /opt/hostedtoolcache/
-    - name: test
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+    - name: Build and push (base)
+      run: docker buildx build --file=Dockerfile --platform=linux/amd64,linux/arm64 --tag=fwilhe2/act-runner:latest
+    - name: image size
       run: |
-          docker pull node
-          docker inspect -f "{{ .Size }}"  node:latest | numfmt --to iec --format "%8.4f"
+          docker inspect -f "{{ .Size }}"  fwilhe2/act-runner:latest | numfmt --to iec --format "%8.4f"
