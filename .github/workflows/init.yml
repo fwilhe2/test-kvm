@@ -11,5 +11,5 @@ jobs:
     - name: Enable KVM group perms
       run: |
           docker pull node
-          BYTES=$(podman inspect -f "{{ .Size }}"  node:latest)
+          BYTES=$(docker inspect -f "{{ .Size }}"  node:latest)
           numfmt --to iec --format "%8.4f" $BYTES
